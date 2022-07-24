@@ -22,10 +22,12 @@ async function renderCard() {
   if (cards && cards.length > 0) {
     let toRender = "";
     const headerTitle = [cards[0]["_embedded"]["wp:term"][2][0].name, cards[1]["_embedded"]["wp:term"][3][1].name, cards[2]["_embedded"]["wp:term"][1][0].name]
+    // uncomment next line to add some new sample post 
+    // for(let i = 0; i < 5; i++) addOptionalPost(cards, headerTitle, 'new topic', cards[0].date, "#", cards[0].featured_media, "Titolo articolo", "CiccioTecchio", "#");
     cards.forEach((card, i) => {
       let element = ""
       switch (i % 3) {
-        case 0: element = `<div class="row row__content">${designCard(card, headerTitle[i])}`; break;
+        case 0: element = `<div class="row">${designCard(card, headerTitle[i])}`; break;
         case 1: element = designCard(card, headerTitle[i]); break;
         case 2: element = `${designCard(card, headerTitle[i])}</div>`; break
       }
@@ -66,6 +68,31 @@ function designCard(card, headerTitle) {
     </div>
   </div>
   `;
+}
+
+/**
+ * It allows you to add a new post.
+ * I created this method because the API only provides three posts and to test that the layout would work even with multiple rows I created this method.
+ * Normally it is not used, the use of this method can be found in the __renderCard__ method.
+ * @param {Array<Object>} cards list of card
+ * @param {Array<string>} headerTitle list of title in the header of card
+ * @param {string} topicTitle title of the topic of the new card
+ * @param {string} date date of publication of the new post
+ * @param {string} link link to the new post
+ * @param {string} img img of the new post
+ * @param {string} title title of the new post
+ * @param {string} authorName name of the author of the post
+ * @param {string} authorLink link to the author profile
+ */
+function addOptionalPost(cards, headerTitle, topicTitle, date, link, img, title, authorName, authorLink){
+  headerTitle.push(topicTitle);
+  cards.push({
+    date: date,
+    link: link, 
+    featured_media: img,
+    title:{rendered: title},
+    _embedded:{author: [{link:authorLink, name:authorName}]}
+  })
 }
 
 renderCard();

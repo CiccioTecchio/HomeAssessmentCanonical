@@ -1,8 +1,9 @@
-.row__content{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.row{
+  margin-bottom: 1%;
+}
+
+.content{
+  margin-top: 1%;
 }
 
 hr{
@@ -15,6 +16,7 @@ hr{
   border-radius: 2px;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 }
 
 footer{
