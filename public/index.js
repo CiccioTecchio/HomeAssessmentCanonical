@@ -23,7 +23,7 @@ async function renderCard() {
     let toRender = "";
     const headerTitle = [cards[0]["_embedded"]["wp:term"][2][0].name, cards[1]["_embedded"]["wp:term"][3][1].name, cards[2]["_embedded"]["wp:term"][1][0].name]
     // uncomment next line to add some new sample post 
-    // for(let i = 0; i < 5; i++) addOptionalPost(cards, headerTitle, 'new topic', cards[0].date, "#", cards[0].featured_media, "Titolo articolo", "CiccioTecchio", "#");
+    //for(let i = 0; i < 5; i++) addOptionalPost(cards, headerTitle, 'new topic', cards[0].date, "#", cards[0].featured_media, "Titolo articolo", "CiccioTecchio", "#", "Footer");
     cards.forEach((card, i) => {
       let element = ""
       switch (i % 3) {
@@ -63,7 +63,7 @@ function designCard(card, headerTitle) {
       </div>
       <footer>
         <hr class ="u-sv1">
-        <p>Article</p>
+        <p>${card["_embedded"]["wp:term"][0][0].name}</p>
       </footer>
     </div>
   </div>
@@ -84,14 +84,17 @@ function designCard(card, headerTitle) {
  * @param {string} authorName name of the author of the post
  * @param {string} authorLink link to the author profile
  */
-function addOptionalPost(cards, headerTitle, topicTitle, date, link, img, title, authorName, authorLink){
+function addOptionalPost(cards, headerTitle, topicTitle, date, link, img, title, authorName, authorLink, footerName){
   headerTitle.push(topicTitle);
   cards.push({
     date: date,
     link: link, 
     featured_media: img,
     title:{rendered: title},
-    _embedded:{author: [{link:authorLink, name:authorName}]}
+    _embedded:{
+      author: [{link:authorLink, name:authorName}],
+      "wp:term":[[{name: footerName}]]
+    }
   })
 }
 
